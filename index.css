@@ -1,0 +1,200 @@
+:root {
+            --bg-main: #1a1625;
+            --bg-header: #231d2e;
+            --bg-message: #2a2438;
+            --bg-user: #3730a3;
+            --bg-bot-avatar: #7c3aed;
+            --bg-user-avatar: #4c1d95;
+            --bg-scrollbar: #3f3551;
+            
+            --text-title: #a78bfa;
+            --text-subtitle: #9ca3af;
+            --text-main: #e5e7eb;
+            --text-user: #ddd6fe;
+            --text-user-avatar: #c4b5fd;
+            --text-placeholder: #6b7280;
+            --text-typing: #9ca3af;
+            
+            --btn-primary: #7c3aed;
+            --btn-hover: #6d28d9;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-main);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            height: calc(100vh - 40px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            padding: 20px;
+            background: var(--bg-header);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left h1 {
+            color: var(--text-title);
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .subtitle {
+            color: var(--text-subtitle);
+            font-size: 14px;
+        }
+
+        .about-btn {
+            background: var(--btn-primary);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .about-btn:hover {
+            background: var(--btn-hover);
+        }
+
+        .messages {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding-right: 10px;
+        }
+
+        .messages::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .messages::-webkit-scrollbar-thumb {
+            background: var(--bg-scrollbar);
+            border-radius: 3px;
+        }
+
+        .msg {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .user {
+            flex-direction: row-reverse;
+        }
+
+        .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .user .avatar {
+            background: var(--bg-user-avatar);
+            color: var(--text-user-avatar);
+        }
+
+        .bot .avatar {
+            background: var(--bg-bot-avatar);
+            color: white;
+        }
+
+        .bubble {
+            background: var(--bg-message);
+            color: var(--text-main);
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 15px;
+            line-height: 1.5;
+            max-width: 500px;
+        }
+
+        .user .bubble {
+            background: var(--bg-user);
+            color: var(--text-user);
+        }
+
+        .input-area {
+            background: var(--bg-message);
+            border-radius: 12px;
+            padding: 8px;
+            display: flex;
+            gap: 8px;
+        }
+
+        input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            font-size: 15px;
+            padding: 10px;
+            outline: none;
+        }
+
+        input::placeholder {
+            color: var(--text-placeholder);
+        }
+
+        button {
+            background: var(--btn-primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: var(--btn-hover);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .typing {
+            display: none;
+            color: var(--text-typing);
+            font-size: 13px;
+            padding: 8px 0;
+        }
+
+        .typing.show {
+            display: block;
+        }
+
+        #result {
+            display: none;
+        }

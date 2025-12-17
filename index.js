@@ -41,6 +41,7 @@ input.onkeypress = (e) => {
 
 input.focus();
 
+
 async function getBotResponse(message) {
     try {
         // Show typing indicator
@@ -48,18 +49,21 @@ async function getBotResponse(message) {
         btn.disabled = true;
         console.log("User message:", message);
 
-        // Fetch response from backend
+       
         const response = await fetch('http://localhost:3000/', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                message: message
+                message: message, 
+                
             })
-        });
-        const data = await response.json();
+        });   
 
+        
+        const data = await response.json();
+        console.log("Raw bot response:", data);
         const data1 = marked.parse(data);
 
         console.log("Bot response:", data1);

@@ -1,19 +1,28 @@
 {
   "name": "gemini",
   "version": "1.0.0",
-  "description": "",
+  "description": "a simple chatbot app",
+  "keywords": [],
+  "homepage": "https://github.com/Tejasri-T/chatbot#readme",
+  "bugs": {
+    "url": "https://github.com/Tejasri-T/chatbot/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tejasri-T/chatbot.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "module",
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "nodemon": "^3.1.11"
   }
 }

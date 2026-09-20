@@ -38,20 +38,29 @@ chatbot = graph.compile(checkpointer = checkpointer)
 
 if __name__ == '__main__':
 
-    thread_id = '1'
-    while True:
+    CONFIG = {'configurable' : {'thread_id' : 'thread_1'}}
+    
+    # thread_id = '1'
+    # while True:
         
-        user_message = input('Typed here: ')
+    #     user_message = input('Typed here: ')
         
-        print("User: ",user_message)
+    #     print("User: ",user_message)
         
-        if user_message.strip().lower() in ["end","exit","quit","bye"]:
-            break
+    #     if user_message.strip().lower() in ["end","exit","quit","bye"]:
+    #         break
         
-        config = {'configurable' : {'thread_id' : thread_id}}
+    #     config = {'configurable' : {'thread_id' : thread_id}}
         
-        response = chatbot.invoke({'messages': [HumanMessage(content=user_message)]}, config=config)
+    #     response = chatbot.invoke({'messages': [HumanMessage(content=user_message)]}, config=config)
         
-        history = response['messages']
-        print("AI: ",response['messages'][-1].content[0]['text'])
+    #     history = response['messages']
+    #     print("AI: ",response['messages'][-1].content[0]['text'])
         
+    # for message_chunk, metadata in chatbot.stream(
+    #     {"messages": [HumanMessage(content="500 words essay on mosquites")]},
+    #     stream_mode="messages",
+    #     config=CONFIG
+    # ):
+    #     if message_chunk.content:
+    #         print(message_chunk.content[0]['text'], flush=True)

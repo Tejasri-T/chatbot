@@ -1,3 +1,4 @@
+from huggingface_hub import metadata_eval_result, metadata_save
 import streamlit as st 
 from backend import chatbot
 from langchain_core.messages import HumanMessage
@@ -25,12 +26,22 @@ if user_message:
     
     
     
-    response = chatbot.invoke({'messages': [HumanMessage(content=user_message)]}, config=CONFIG)
-    ai_message = response['messages'][-1].content[0]['text']
+    # response = chatbot.stream(
+    #     {'messages': [HumanMessage(content=user_message)]}, 
+    #     stream_mode="messages",
+    #     config=CONFIG)
     
     
-    messages.append({'role':'assistant','content':ai_message})
+    
+    # messages.append({'role':'assistant','content':ai_message})
     with st.chat_message("assistant"):
-        st.write(ai_message)
+        ai_message = st.write_stream(
+            mesg.content[0]['text'] if mesg.content else "" for mesg, metadata in chatbot.stream(
+            {'messages': [HumanMessage(content=user_message)]}, 
+            stream_mode="messages",
+            config=CONFIG
+            )
+        )
+    messages.append({'role':'assistant','content':ai_message})  
         
         

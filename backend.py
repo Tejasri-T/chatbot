@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from langgraph.graph.message import add_messages
 from langgraph.checkpoint.memory import MemorySaver
 from langchain_core.messages import BaseMessage,SystemMessage, HumanMessage
+from openai import BaseModel
 
 load_dotenv()
 
@@ -35,6 +36,32 @@ graph.add_edge("chat_node",END)
 chatbot = graph.compile(checkpointer = checkpointer)
 
 
+class NameState(TypedDict):
+    messages:list
+    past:list
+    name:str
+    
+class NameSchema(BaseModel):
+    name: str
+    
+structured_llm = llm.with_structured_output(NameSchema)
+    
+    
+def name_node(state:NameState):
+    
+    response = structured_llm.invoke(f"Give a small chat name for the chat based on the conversation: {state['messages']}, other than titles of previous chats : {state['past']}")
+    
+    return {'name': response.name}
+
+graph1 = StateGraph(NameState)
+
+graph1.add_node("name_node",name_node)
+graph1.add_edge(START,"name_node")
+graph1.add_edge("name_node",END)
+
+namebot = graph1.compile()
+
+
 
 if __name__ == '__main__':
 
@@ -57,10 +84,9 @@ if __name__ == '__main__':
     #     history = response['messages']
     #     print("AI: ",response['messages'][-1].content[0]['text'])
         
-    # for message_chunk, metadata in chatbot.stream(
-    #     {"messages": [HumanMessage(content="500 words essay on mosquites")]},
-    #     stream_mode="messages",
-    #     config=CONFIG
-    # ):
-    #     if message_chunk.content:
-    #         print(message_chunk.content[0]['text'], flush=True)
+    respone =chatbot.invoke(
+        {"messages": [HumanMessage(content="hey")]},
+        config=CONFIG
+    )
+    
+    print(chatbot.get_state(config=CONFIG).values['messages'])

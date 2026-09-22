@@ -1,6 +1,8 @@
 
+from urllib import response
+
 import streamlit as st 
-from backend import chatbot,namebot
+from backend import chatbot,retrieve_all_threads,namebot
 from langchain_core.messages import HumanMessage
 import uuid
 
@@ -44,7 +46,7 @@ if 'thread_id' not in  st.session_state:
     st.session_state['thread_id'] = generate_thread_id()
 
 if 'chat_threads' not in  st.session_state:
-    st.session_state['chat_threads'] = {}
+    st.session_state['chat_threads'] = retrieve_all_threads()
 
 
 
@@ -113,11 +115,17 @@ if user_message:
 
     f = False
     with st.chat_message("assistant"):
-        if 'new chat' in st.session_state['chat_threads'][st.session_state['thread_id']] and len(st.session_state['message_hist'])<3:
-            res = namebot.invoke({'messages':messages,"past":list(st.session_state['chat_threads'].values())})
-            st.session_state['chat_threads'][st.session_state['thread_id']] = res['name'] 
-            # st.sidebar.write("rerunning")
+        if st.session_state['chat_threads'][st.session_state['thread_id']].startswith('new chat') and len(st.session_state['message_hist'])<3:
+                    
+            response = namebot.invoke(
+                {"messages": messages},
+                config=CONFIG
+                )
+            # name = get_name(st.session_state['thread_id'])
+            # print(response["name"])
+            st.session_state['chat_threads'][st.session_state['thread_id']] = response['name'] if response else ""
             f = True
+                    
         ai_message = st.write_stream(
             mesg.content[0]['text'] if mesg.content else "" for mesg, metadata in chatbot.stream(
             {'messages': [HumanMessage(content=user_message)]}, 
@@ -125,6 +133,8 @@ if user_message:
             config=CONFIG
             )
         )
+        
+        
     messages.append({'role':'assistant','content':ai_message})
     
     if f:
